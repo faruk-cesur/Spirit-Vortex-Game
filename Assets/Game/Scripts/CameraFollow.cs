@@ -7,7 +7,7 @@ public class CameraFollow : MonoBehaviour
     
     // Variables
     private Camera _camera;
-    public PlayerController player;
+    public SwipeControl player;
     public Transform camPos;
     public Transform followerCam;
     public Transform finishCam;
@@ -28,8 +28,7 @@ public class CameraFollow : MonoBehaviour
     // Camera is following the player while in MainGame State
     private void CamFollow()
     {
-        camPos.position = Vector3.Lerp(camPos.position, player.transform.position, Time.deltaTime*2);
-
+        camPos.position = Vector3.Lerp(camPos.position, player.playerModelRoot.transform.position, Time.deltaTime * 2);
         if (!player.finishCam)
         {
             if (_camera.transform.parent != followerCam)

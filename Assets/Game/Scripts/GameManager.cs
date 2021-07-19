@@ -11,14 +11,17 @@ public class GameManager : MonoBehaviour
 {
     // Singleton
     public static GameManager gameManager;
+
+    public static Camera Cam;
     private void Awake()
     {
         gameManager = this;
+        Cam = Camera.main;
     }
     
     // All Variables in GameManager
 
-    public PlayerController player;
+    public SwipeControl player;
     private GameState _currentGameState;
    
     
