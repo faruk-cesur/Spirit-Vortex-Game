@@ -11,7 +11,6 @@ public class CameraFollow : MonoBehaviour
     public Transform camPos;
     public Transform followerCam;
     public Transform finishCam;
-    public Transform playerModel;
 
     // _camera will keep the reference for Camera.main
     private void Awake()
@@ -48,7 +47,7 @@ public class CameraFollow : MonoBehaviour
             }
 
             _camera.transform.localRotation = Quaternion.Euler(Vector3.zero);
-            finishCam.transform.LookAt(playerModel.transform);
+            finishCam.transform.LookAt(player.transform);
         }
 
         _camera.transform.localPosition = Vector3.Lerp(_camera.transform.localPosition, Vector3.zero, Time.deltaTime*2);
