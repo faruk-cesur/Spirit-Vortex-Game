@@ -7,7 +7,7 @@ public class CameraFollow : MonoBehaviour
     
     // Variables
     private Camera _camera;
-    public SwipeControl player;
+    public PlayerController player;
     public Transform camPos;
     public Transform followerCam;
     public Transform finishCam;

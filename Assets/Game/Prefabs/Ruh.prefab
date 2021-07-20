@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 8531917204226082303}
   - component: {fileID: 314703937944559283}
   - component: {fileID: 314703937944559280}
-  - component: {fileID: 314703937944559282}
+  - component: {fileID: 2461192974029284407}
   m_Layer: 0
   m_Name: Ruh
   m_TagString: Untagged
@@ -142,30 +142,25 @@ SphereCollider:
   m_GameObject: {fileID: 9019766478706106181}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.002
   m_Center: {x: 0, y: 0, z: 0.003}
---- !u!114 &314703937944559282
-MonoBehaviour:
+--- !u!111 &2461192974029284407
+Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9019766478706106181}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c73f48c4e8e656f4bb21471f66f5a11d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 0}
-  finishCam: {fileID: 0}
-  _firstLine: -3.5
-  _secondLine: 0.5
-  _thirdLine: 3.5
-  _moveThreshold: 0.5
-  _speed: 10
-  _moveSpeed: 300
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 9ea97cdb9d1c29644b425e21880a3406, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &2242397821906564399
 PrefabInstance:
   m_ObjectHideFlags: 0

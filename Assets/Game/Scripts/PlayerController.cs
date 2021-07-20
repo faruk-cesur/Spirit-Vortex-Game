@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwipeControl : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
    
-
    public float speed;
    [Header("Spirit")]
    public Transform playerModelRoot;
@@ -21,12 +20,9 @@ public class SwipeControl : MonoBehaviour
    [Header("Camera")]
    [HideInInspector] public bool finishCam;
    
-   private void Update()
-   {
-      PlayerMovement();
-   }
 
-   private void PlayerMovement()
+
+   public void PlayerMovement()
    {
       Vector3 direc = transform.forward * (Time.deltaTime * speed);
       transform.Translate(direc);
@@ -91,7 +87,50 @@ public class SwipeControl : MonoBehaviour
          yield return new WaitForEndOfFrame();
       }
    }
+   
+   // Player's speed down slowly when reach at finish line
+   public void PlayerSpeedDown()
+   {
+      StartCoroutine(FinishGame());
+   }
 
+   // IEnumerator Coroutine to get slow effect
+   IEnumerator FinishGame()
+   {
+      float timer = 0;
+      float fixSpeed = speed;
+      while (true)
+      {
+         timer += Time.deltaTime;
+         speed = Mathf.Lerp(fixSpeed, 0, timer);
+         if (timer >= 1f)
+         {
+            break;
+         }
+         yield return new WaitForEndOfFrame();
+      }
+   }
 
+   // private void OnTriggerEnter(Collider other)
+   // {
+   //    Obstacle obstacle = other.gameObject.GetComponentInParent<Obstacle>();
+   //
+   //    if (obstacle)
+   //    {
+   //       GameManager.Instance.CurrentGameState = GameManager.GameState.GameOver;
+   //    }
+   // }
+   
+   private void OnCollisionEnter(Collision other)
+   {
+      Obstacle obstacle = other.gameObject.GetComponentInParent<Obstacle>();
 
+      if (obstacle)
+      {
+         GameManager.Instance.CurrentGameState = GameManager.GameState.GameOver;
+         GetComponent<Collider>().enabled = false;
+         transform.position = new Vector3(transform.position.x, transform.position.y - 0.55f, transform.position.z - 0.8f);
+         other.gameObject.GetComponent<Collider>().enabled = false;
+      }
+   }
 }

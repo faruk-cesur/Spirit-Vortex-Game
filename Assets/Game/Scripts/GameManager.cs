@@ -2,27 +2,34 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public class GameManager : MonoBehaviour
 {
     // Singleton
-    public static GameManager gameManager;
-
+    public static GameManager Instance;
     public static Camera Cam;
     private void Awake()
     {
-        gameManager = this;
+        Instance = this;
         Cam = Camera.main;
     }
     
     // All Variables in GameManager
 
-    public SwipeControl player;
+    public PlayerController player;
     private GameState _currentGameState;
+    [SerializeField] private GameObject tapToPlayUI;
+    [SerializeField] private GameObject deathScreenUI;
+    [SerializeField] private Animator animator;
+    
+    
    
     
     // Using Game State For Functionality
@@ -66,16 +73,29 @@ public class GameManager : MonoBehaviour
         switch (CurrentGameState)
         {
             case GameState.Prepare:
+                tapToPlayUI.SetActive(true);
+                deathScreenUI.SetActive(false);
                 if (Input.GetMouseButtonDown(0))
                 {
                     CurrentGameState = GameState.MainGame;
                 }
                 break;
             case GameState.MainGame:
+                animator.SetBool("MainGame",true);
+                tapToPlayUI.SetActive(false);
+                player.PlayerMovement();
+                
                 break;
             case GameState.FinishGame:
+                player.PlayerMovement();
+                animator.SetBool("MainGame",false);
+                animator.SetBool("FinishGame",true);
+                player.playerModelRoot.Rotate(Vector3.left*5);
                 break;
             case GameState.GameOver:
+                deathScreenUI.SetActive(true);
+                animator.SetBool("MainGame",false);
+                animator.SetBool("GameOver",true);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
