@@ -111,26 +111,18 @@ public class PlayerController : MonoBehaviour
       }
    }
 
-   // private void OnTriggerEnter(Collider other)
+  
+   
+   // private void OnCollisionEnter(Collision other)
    // {
    //    Obstacle obstacle = other.gameObject.GetComponentInParent<Obstacle>();
    //
    //    if (obstacle)
    //    {
    //       GameManager.Instance.CurrentGameState = GameManager.GameState.GameOver;
+   //       GetComponent<Collider>().enabled = false;
+   //       transform.position = new Vector3(transform.position.x, transform.position.y - 0.55f, transform.position.z - 0.8f);
+   //       other.gameObject.GetComponent<Collider>().enabled = false;
    //    }
    // }
-   
-   private void OnCollisionEnter(Collision other)
-   {
-      Obstacle obstacle = other.gameObject.GetComponentInParent<Obstacle>();
-
-      if (obstacle)
-      {
-         GameManager.Instance.CurrentGameState = GameManager.GameState.GameOver;
-         GetComponent<Collider>().enabled = false;
-         transform.position = new Vector3(transform.position.x, transform.position.y - 0.55f, transform.position.z - 0.8f);
-         other.gameObject.GetComponent<Collider>().enabled = false;
-      }
-   }
 }
