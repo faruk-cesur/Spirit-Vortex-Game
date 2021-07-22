@@ -163,7 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spiritFragment: 0
   isSpiritPower: 0
-  spiritCollectSound: {fileID: 8300000, guid: 45b2ad3730980fd4a844a0298605b983, type: 3}
+  spiritCollectSound: {fileID: 8300000, guid: 061469c36527398448e77294fd5c5599, type: 3}
   spiritShield1: {fileID: 5465726409962493188}
   spiritShield2: {fileID: 8004154275637024893}
   spiritShield3: {fileID: 6108202459138388778}

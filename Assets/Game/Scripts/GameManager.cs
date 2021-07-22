@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     private GameState _currentGameState;
     [SerializeField] private GameObject tapToPlayUI;
     [SerializeField] private GameObject deathScreenUI;
-    [SerializeField] private Animator animator;
+    public Animator animator;
 
     
     

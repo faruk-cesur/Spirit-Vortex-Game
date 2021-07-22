@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class SpiritController : MonoBehaviour
 {
-    public int spiritFragment;
-    public bool isSpiritPower;
+    [HideInInspector]public int spiritFragment;
+    [HideInInspector]public bool isSpiritPower;
     public AudioClip spiritCollectSound;
     public GameObject spiritShield1;
     public GameObject spiritShield2;
@@ -25,7 +25,7 @@ public class SpiritController : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
-
+    
     private void Update()
     {
         SpiritChange();
@@ -91,6 +91,10 @@ public class SpiritController : MonoBehaviour
             spiritShield4.SetActive(true);
             spiritPower.SetActive(true);
             isSpiritPower = true;
+        }
+        if (spiritFragment < 5)
+        {
+            isSpiritPower = false;
         }
     }
 }
