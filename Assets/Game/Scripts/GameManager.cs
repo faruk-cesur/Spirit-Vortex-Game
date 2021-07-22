@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
         switch (CurrentGameState)
         {
             case GameState.Prepare:
+                animator.applyRootMotion = true;
                 tapToPlayUI.SetActive(true);
                 deathScreenUI.SetActive(false);
                 if (Input.GetMouseButtonDown(0))
@@ -82,6 +83,8 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameState.MainGame:
+                animator.applyRootMotion = false;
+                player.transform.rotation = Quaternion.identity;
                 animator.SetBool("MainGame",true);
                 tapToPlayUI.SetActive(false);
                 player.PlayerMovement();
