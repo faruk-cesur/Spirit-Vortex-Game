@@ -29,10 +29,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject deathScreenUI;
     public Animator animator;
 
-    
-    
-   
-    
+
     // Using Game State For Functionality
     public enum GameState
     {

@@ -5,13 +5,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Player")] public float speed;
+    [Header("Player")] 
+    public float speed;
     public GameObject lifeObstacle;
     public GameObject deathObstacle;
     public SpiritController spiritController;
     public AudioClip deathSound;
     public AudioClip powerSound;
-    [Header("Spirit")] public Transform playerModelRoot;
+    
+    [Header("Spirit")] 
+    public Transform playerModelRoot;
     public float posX;
     public float startPosX;
     public float swipeSec;
@@ -130,6 +133,12 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(SpeedUpAfterSpell());
             }
         }
+        
+        FinishColliderTrigger finishColliderTrigger = other.GetComponentInParent<FinishColliderTrigger>();
+        if (finishColliderTrigger)
+        {
+            GetComponent<Collider>().enabled = false;
+        }
     }
 
     IEnumerator SpeedUpAfterSpell()
@@ -157,9 +166,15 @@ public class PlayerController : MonoBehaviour
        {
           GameManager.Instance.CurrentGameState = GameManager.GameState.GameOver;
           GetComponent<Collider>().enabled = false;
-          transform.position = new Vector3(transform.position.x, transform.position.y - 0.25f, transform.position.z - 0.5f);
           other.gameObject.GetComponent<Collider>().enabled = false;
           AudioSource.PlayClipAtPoint(deathSound,GameManager.Cam.transform.position);
+          StartCoroutine(PositionAfterGameOver());
        }
+    }
+
+    IEnumerator PositionAfterGameOver()
+    {
+        yield return new WaitForSeconds(3.2f);
+        transform.position = new Vector3(transform.position.x, transform.position.y-0.405f, transform.position.z);
     }
 }

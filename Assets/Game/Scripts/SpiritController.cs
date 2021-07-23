@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class SpiritController : MonoBehaviour
 {
-    [HideInInspector]public int spiritFragment;
+    public int spiritFragment;
     [HideInInspector]public bool isSpiritPower;
     public AudioClip spiritCollectSound;
+    public AudioClip electricSound;
     public GameObject spiritShield1;
     public GameObject spiritShield2;
     public GameObject spiritShield3;
@@ -23,6 +24,17 @@ public class SpiritController : MonoBehaviour
             spiritFragment++;
             AudioSource.PlayClipAtPoint(spiritCollectSound, GameManager.Cam.transform.position);
             Destroy(other.gameObject);
+        }
+        
+        NoGhostObstacle noGhostObstacle = other.gameObject.GetComponentInParent<NoGhostObstacle>();
+    
+        if (noGhostObstacle)
+        {
+            if (spiritFragment>0)
+            {
+                spiritFragment--;
+            }
+            AudioSource.PlayClipAtPoint(electricSound,GameManager.Cam.transform.position);
         }
     }
     
