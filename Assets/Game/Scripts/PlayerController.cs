@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public SpiritController spiritController;
     public AudioClip deathSound;
     public AudioClip powerSound;
+    public AudioClip startSound;
     
     [Header("Spirit")] 
     public Transform playerModelRoot;

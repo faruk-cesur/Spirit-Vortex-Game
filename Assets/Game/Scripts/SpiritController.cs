@@ -1,19 +1,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpiritController : MonoBehaviour
 {
-    public int spiritFragment;
-    [HideInInspector]public bool isSpiritPower;
+    [HideInInspector] public int spiritFragment;
+    [HideInInspector] public int diamondScore;
+    [HideInInspector] public bool isSpiritPower;
     public AudioClip spiritCollectSound;
     public AudioClip electricSound;
+    public AudioClip diamondCollectSound;
     public GameObject spiritShield1;
     public GameObject spiritShield2;
     public GameObject spiritShield3;
     public GameObject spiritShield4;
     public GameObject spiritPower;
+    public GameObject diamondImageUI;
+    public Animator animator;
+    public TMP_Text diamondScoreText;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -36,7 +43,26 @@ public class SpiritController : MonoBehaviour
             }
             AudioSource.PlayClipAtPoint(electricSound,GameManager.Cam.transform.position);
         }
+        
+        CollectDiamond collectDiamond = other.gameObject.GetComponentInParent<CollectDiamond>();
+    
+        if (collectDiamond)
+        {
+            diamondScore++;
+            StartCoroutine(DiamondScoreAnimation());
+            diamondImageUI.GetComponent<Image>().enabled = true;
+            animator.SetTrigger("DiamondUI");
+        }
     }
+
+    IEnumerator DiamondScoreAnimation()
+    {
+        yield return new WaitForSeconds(0.2f);
+        diamondScoreText.text = diamondScore.ToString();
+        AudioSource.PlayClipAtPoint(diamondCollectSound,GameManager.Cam.transform.position);
+    }
+    
+
     
     private void Update()
     {

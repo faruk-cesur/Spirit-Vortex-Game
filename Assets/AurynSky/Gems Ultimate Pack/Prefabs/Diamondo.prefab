@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 33000010548150562}
   - component: {fileID: 23000012859278624}
   - component: {fileID: 114000013075131974}
+  - component: {fileID: 3958664719361241825}
+  - component: {fileID: 3302407480804608483}
   m_Layer: 0
   m_Name: Diamondo
   m_TagString: Untagged
@@ -106,3 +108,29 @@ MonoBehaviour:
   endScale: {x: 0.25, y: 0.25, z: 0.25}
   scaleSpeed: 5
   scaleRate: 0.5
+--- !u!114 &3958664719361241825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013931470818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0309a3fcffbadf84dac327cb29702fff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!136 &3302407480804608483
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013931470818}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.31
+  m_Height: 3.25
+  m_Direction: 2
+  m_Center: {x: 0, y: -0.00000005960466, z: 0}

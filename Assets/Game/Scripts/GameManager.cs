@@ -25,8 +25,9 @@ public class GameManager : MonoBehaviour
 
     public PlayerController player;
     private GameState _currentGameState;
-    [SerializeField] private GameObject tapToPlayUI;
-    [SerializeField] private GameObject deathScreenUI;
+    [SerializeField] private GameObject prepareUI;
+    [SerializeField] private GameObject mainGameUI;
+    [SerializeField] private GameObject gameOverUI;
     public Animator animator;
 
 
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
                 case GameState.Prepare:
                     break;
                 case GameState.MainGame:
+                    AudioSource.PlayClipAtPoint(player.startSound,Cam.transform.position);
                     break;
                 case GameState.FinishGame:
                     break;
@@ -72,8 +74,8 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Prepare:
                 animator.applyRootMotion = true;
-                tapToPlayUI.SetActive(true);
-                deathScreenUI.SetActive(false);
+                prepareUI.SetActive(true);
+                gameOverUI.SetActive(false);
                 if (Input.GetMouseButtonDown(0))
                 {
                     CurrentGameState = GameState.MainGame;
@@ -83,7 +85,7 @@ public class GameManager : MonoBehaviour
                 animator.applyRootMotion = false;
                 player.transform.rotation = Quaternion.identity;
                 animator.SetBool("MainGame",true);
-                tapToPlayUI.SetActive(false);
+                prepareUI.SetActive(false);
                 player.PlayerMovement();
                 
                 break;
@@ -94,7 +96,7 @@ public class GameManager : MonoBehaviour
                 player.playerModelRoot.Rotate(Vector3.left*5);
                 break;
             case GameState.GameOver:
-                deathScreenUI.SetActive(true);
+                gameOverUI.SetActive(true);
                 animator.SetBool("MainGame",false);
                 animator.SetBool("GameOver",true);
                 break;
