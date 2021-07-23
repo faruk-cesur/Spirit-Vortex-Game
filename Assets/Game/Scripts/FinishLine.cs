@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FinishLine : MonoBehaviour
 {
-    public AudioClip winSound;
-
+    public AudioSource finishSound;
+    
     // Using OnTriggerEnter to change game state when player arrives finish line
     private void OnTriggerEnter(Collider other)
     {
@@ -14,7 +14,7 @@ public class FinishLine : MonoBehaviour
         {
             player.finishCam = true;
             player.PlayerSpeedDown();
-            AudioSource.PlayClipAtPoint(winSound,player.transform.position);
+            finishSound.Play();
 
             //GameManager.gameManager.winGoldText.text = GameManager.gameManager.goldText.text; // Toplam topladığımız ruh parçacığı
             GameManager.Instance.CurrentGameState = GameManager.GameState.FinishGame;

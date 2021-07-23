@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 6655147652986405834}
   - component: {fileID: 6342713246457340611}
   m_Layer: 0
-  m_Name: Ruh
+  m_Name: Spirit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,6 +164,7 @@ MonoBehaviour:
   spiritFragment: 0
   isSpiritPower: 0
   spiritCollectSound: {fileID: 8300000, guid: 061469c36527398448e77294fd5c5599, type: 3}
+  electricSound: {fileID: 8300000, guid: 1d5d51ca8c7fb1f40890c1bf56f452f1, type: 3}
   spiritShield1: {fileID: 5465726409962493188}
   spiritShield2: {fileID: 8004154275637024893}
   spiritShield3: {fileID: 6108202459138388778}
