@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
             Vector3 modelPos = playerModelRoot.localPosition;
             modelPos.x = Mathf.Lerp(modelPos.x, startPosX, timer);
             playerModelRoot.localPosition = modelPos;
-            if (timer >= 1f)
+            if (timer >= 0.5f)
             {
                 _inputControl = false;
                 break;

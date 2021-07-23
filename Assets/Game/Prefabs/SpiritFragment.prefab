@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 461547780}
   - component: {fileID: 461547781}
   m_Layer: 0
-  m_Name: Collectable
+  m_Name: SpiritFragment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

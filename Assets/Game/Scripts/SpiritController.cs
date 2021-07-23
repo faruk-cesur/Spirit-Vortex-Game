@@ -51,6 +51,7 @@ public class SpiritController : MonoBehaviour
             diamondScore++;
             StartCoroutine(DiamondScoreAnimation());
             diamondImageUI.GetComponent<Image>().enabled = true;
+            Destroy(other.gameObject);
             animator.SetTrigger("DiamondUI");
         }
     }

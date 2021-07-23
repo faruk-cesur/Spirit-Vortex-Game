@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject mainGameUI;
     [SerializeField] private GameObject gameOverUI;
     public Animator animator;
+    public GameObject spiritPowerObstacle;
 
 
     // Using Game State For Functionality
@@ -64,8 +65,12 @@ public class GameManager : MonoBehaviour
             _currentGameState = value;
         }
     }
-    
-    
+
+    private void Start()
+    {
+        Instantiate(spiritPowerObstacle, new Vector3(0, -1.5f, 191.90f),Quaternion.identity);
+    }
+
     // Doing things in update when game state changes
     private void Update()
     
