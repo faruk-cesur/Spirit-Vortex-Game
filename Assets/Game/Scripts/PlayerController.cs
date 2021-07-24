@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
                 GameManager.Instance.animator.SetBool("MainGame", false);
                 AudioSource.PlayClipAtPoint(powerSound,GameManager.Cam.transform.position);
                 speed = 0;
-                StartCoroutine(ObstacleAfterSpell());
+                StartCoroutine(ObstacleAfterSpell());   
                 StartCoroutine(SpeedUpAfterSpell());
             }
         }
