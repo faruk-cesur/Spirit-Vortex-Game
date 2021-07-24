@@ -30,7 +30,7 @@ public class CameraFollow : MonoBehaviour
     private void CamFollow()
     {
         camPos.position = Vector3.Lerp(camPos.position, player.playerModelRoot.transform.position, Time.deltaTime * 2);
-        if (!player.finishCam)
+        if (!player.finishCam && GameManager.Instance.CurrentGameState != GameManager.GameState.GameOver)
         {
             if (_camera.transform.parent != followerCam)
             {
@@ -38,8 +38,18 @@ public class CameraFollow : MonoBehaviour
             }
             _camera.transform.localRotation = Quaternion.Lerp(_camera.transform.localRotation, Quaternion.identity, Time.deltaTime*2);
         }
+        
+        else if (!player.finishCam && GameManager.Instance.CurrentGameState == GameManager.GameState.GameOver)
+        {
+            if (_camera.transform.parent != gameOverCam)
+            {
+                _camera.transform.SetParent(gameOverCam);
+            }
+            _camera.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            gameOverCam.transform.LookAt(player.transform);
+        }
         // Camera is changed to finished cam position
-        else
+        else if (player.finishCam && GameManager.Instance.CurrentGameState == GameManager.GameState.FinishGame)
         {
             if (_camera.transform.parent != finishCam)
             {
@@ -49,6 +59,7 @@ public class CameraFollow : MonoBehaviour
             _camera.transform.localRotation = Quaternion.Euler(Vector3.zero);
             finishCam.transform.LookAt(player.transform);
         }
+        
 
         _camera.transform.localPosition = Vector3.Lerp(_camera.transform.localPosition, Vector3.zero, Time.deltaTime*2);
         

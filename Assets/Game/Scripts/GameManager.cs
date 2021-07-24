@@ -67,6 +67,82 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    
+
+    // Doing things in update when game state changes
+    private void Update()
+    
+    {
+        switch (CurrentGameState)
+        {
+            case GameState.Prepare:
+                animator.applyRootMotion = true;
+                prepareUI.SetActive(true);
+                mainGameUI.SetActive(false);
+                gameOverUI.SetActive(false);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    CurrentGameState = GameState.MainGame;
+                }
+                break;
+            case GameState.MainGame:
+                mainGameUI.SetActive(true);
+                animator.applyRootMotion = false;
+                player.transform.rotation = Quaternion.identity;
+                animator.SetBool("MainGame",true);
+                prepareUI.SetActive(false);
+                player.PlayerMovement();
+                
+                break;
+            case GameState.FinishGame:
+                player.PlayerMovement();
+                animator.SetBool("MainGame",false);
+                animator.SetBool("FinishGame",true);
+                player.playerModelRoot.Rotate(Vector3.left*5);
+                break;
+            case GameState.GameOver:
+                StartCoroutine(GameOverUIDelay());
+                animator.SetBool("MainGame",false);
+                animator.SetBool("GameOver",true);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    private void Start()
+    {
+        StartCoroutine(HandAnimation());
+    }
+
+    // Reloads the same scene. Using with button
+    public void Retry()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.buildIndex);
+    }
+
+    // Loads the next scene. Using with button
+    public void NextLevel()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        
+        if (SceneManager.sceneCountInBuildSettings > currentScene.buildIndex+1)
+        {
+            SceneManager.LoadScene(currentScene.buildIndex+1);
+        }
+        else if (SceneManager.sceneCountInBuildSettings <= currentScene.buildIndex+1)
+        {
+            return;
+        }
+    }
+
+    IEnumerator GameOverUIDelay()
+    {
+        yield return new WaitForSeconds(3f);
+        gameOverUI.SetActive(true);
+    }
+    
     IEnumerator HandAnimation()
     {
         //-270 90 450
@@ -123,72 +199,6 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
             yield return new WaitForSeconds(1f);
-        }
-    }
-
-    // Doing things in update when game state changes
-    private void Update()
-    
-    {
-        switch (CurrentGameState)
-        {
-            case GameState.Prepare:
-                animator.applyRootMotion = true;
-                prepareUI.SetActive(true);
-                gameOverUI.SetActive(false);
-                if (Input.GetMouseButtonDown(0))
-                {
-                    CurrentGameState = GameState.MainGame;
-                }
-                break;
-            case GameState.MainGame:
-                animator.applyRootMotion = false;
-                player.transform.rotation = Quaternion.identity;
-                animator.SetBool("MainGame",true);
-                prepareUI.SetActive(false);
-                player.PlayerMovement();
-                
-                break;
-            case GameState.FinishGame:
-                player.PlayerMovement();
-                animator.SetBool("MainGame",false);
-                animator.SetBool("FinishGame",true);
-                player.playerModelRoot.Rotate(Vector3.left*5);
-                break;
-            case GameState.GameOver:
-                gameOverUI.SetActive(true);
-                animator.SetBool("MainGame",false);
-                animator.SetBool("GameOver",true);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
-
-    private void Start()
-    {
-        StartCoroutine(HandAnimation());
-    }
-
-    // Reloads the same scene. Using with button
-    public void Retry()
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.buildIndex);
-    }
-
-    // Loads the next scene. Using with button
-    public void NextLevel()
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        
-        if (SceneManager.sceneCountInBuildSettings > currentScene.buildIndex+1)
-        {
-            SceneManager.LoadScene(currentScene.buildIndex+1);
-        }
-        else if (SceneManager.sceneCountInBuildSettings <= currentScene.buildIndex+1)
-        {
-            return;
         }
     }
 }
