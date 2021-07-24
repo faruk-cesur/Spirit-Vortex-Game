@@ -21,6 +21,10 @@ public class SpiritController : MonoBehaviour
     public GameObject diamondImageUI;
     public Animator animator;
     public TMP_Text diamondScoreText;
+    public TMP_Text finishGameDiamondText;
+    public TMP_Text shopDiamondText;
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -53,6 +57,18 @@ public class SpiritController : MonoBehaviour
             diamondImageUI.GetComponent<Image>().enabled = true;
             Destroy(other.gameObject);
             animator.SetTrigger("DiamondUI");
+            
+                if (!PlayerPrefs.HasKey("DiamondScore"))
+                {
+                    PlayerPrefs.SetInt("DiamondScore", diamondScore);
+                }
+
+                if (true)
+                {
+                    PlayerPrefs.SetInt("DiamondScore", 1 + PlayerPrefs.GetInt("DiamondScore"));
+                }
+
+                shopDiamondText.text = PlayerPrefs.GetInt("DiamondScore").ToString();
         }
     }
 
@@ -60,11 +76,17 @@ public class SpiritController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         diamondScoreText.text = diamondScore.ToString();
+        finishGameDiamondText.text = diamondScoreText.text;
         AudioSource.PlayClipAtPoint(diamondCollectSound,GameManager.Cam.transform.position);
     }
-    
 
-    
+
+    // private void Start()
+    // {
+    //     PlayerPrefs.DeleteAll();
+    // }
+
+
     private void Update()
     {
         SpiritChange();

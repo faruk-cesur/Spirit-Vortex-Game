@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Numerics;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -28,9 +29,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject prepareUI;
     [SerializeField] private GameObject mainGameUI;
     [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private GameObject finishGameUI;
+    [SerializeField] private GameObject shopUI;
     public Animator animator;
-    public GameObject spiritPowerObstacle;
-
     public Transform hand;
 
     // Using Game State For Functionality
@@ -80,6 +81,7 @@ public class GameManager : MonoBehaviour
                 prepareUI.SetActive(true);
                 mainGameUI.SetActive(false);
                 gameOverUI.SetActive(false);
+                finishGameUI.SetActive(false);
                 if (Input.GetMouseButtonDown(0))
                 {
                     CurrentGameState = GameState.MainGame;
@@ -99,6 +101,7 @@ public class GameManager : MonoBehaviour
                 animator.SetBool("MainGame",false);
                 animator.SetBool("FinishGame",true);
                 player.playerModelRoot.Rotate(Vector3.left*5);
+                StartCoroutine(FinishGameUIDelay());
                 break;
             case GameState.GameOver:
                 StartCoroutine(GameOverUIDelay());
@@ -137,10 +140,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void OpenShopUI()
+    {
+        shopUI.SetActive(true);
+    }
+
+    public void CloseShopUI()
+    {
+        shopUI.SetActive(false);
+    }
     IEnumerator GameOverUIDelay()
     {
         yield return new WaitForSeconds(3f);
         gameOverUI.SetActive(true);
+    }
+    IEnumerator FinishGameUIDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        finishGameUI.SetActive(true);
     }
     
     IEnumerator HandAnimation()
