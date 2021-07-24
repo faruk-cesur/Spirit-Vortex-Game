@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip deathSound;
     public AudioClip powerSound;
     public AudioClip startSound;
+
+    public bool isLifeAwake;
     
     [Header("Spirit")] 
     public Transform playerModelRoot;
@@ -153,10 +155,57 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         spiritController.spiritFragment -= 5;
-        deathObstacle.SetActive(false);
-        lifeObstacle.SetActive(true);
+        FindDeathObstacle();
+        FindLifeObstacle();
     }
+
+    private void FindDeathObstacle()
+    {
+        float distanceToNearestObject = Mathf.Infinity;
+        DeathObstacleFind nearestObject = null;
+        DeathObstacleFind[] allObjects = GameObject.FindObjectsOfType<DeathObstacleFind>();
+
+        foreach (DeathObstacleFind currentObjects in allObjects)
+        {
+            float distanceToObject = (currentObjects.transform.position - this.transform.position).sqrMagnitude;
+
+            if (distanceToObject < distanceToNearestObject)
+            {
+                distanceToNearestObject = distanceToObject;
+                nearestObject = currentObjects;
+                
+                if (nearestObject.gameObject.transform.position.z - transform.position.z < 30f)
+                {
+                    nearestObject.gameObject.SetActive(false);
+                    isLifeAwake = true;
+                }
+            }
+        }
+    }
+
+    private void FindLifeObstacle()
+    {
+        float distanceToNearestObject = Mathf.Infinity;
+        LifeObstacleFind nearestObject = null;
+        LifeObstacleFind[] allObjects = Resources.FindObjectsOfTypeAll<LifeObstacleFind>();
+
     
+        foreach (LifeObstacleFind currentObjects in allObjects)
+        {
+            float distanceToObject = (currentObjects.transform.position - this.transform.position).sqrMagnitude;
+    
+            if (distanceToObject < distanceToNearestObject)
+            {
+                distanceToNearestObject = distanceToObject;
+                nearestObject = currentObjects;
+                
+                if (nearestObject.gameObject.transform.position.z - transform.position.z < 30f)
+                {
+                    nearestObject.gameObject.SetActive(true);
+                }
+            }
+        }
+    }
 
 
     private void OnCollisionEnter(Collision other)
