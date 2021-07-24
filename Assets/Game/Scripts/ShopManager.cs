@@ -13,37 +13,37 @@ public class ShopManager : MonoBehaviour
     }
 
     // Variables Defined.
-    public GameObject redBall;
+    public PlayerController player;
+
+    public Material ballMaterial;
+
+    public GameObject redSkinBlackWing;
     public GameObject blueBall;
     public GameObject pinkBall;
-    public Material ballMaterial;
     private bool isRedBall = false;
     private bool isBlueBall = false;
     private bool isPinkBall = false;
-    public PlayerController player;
 
     public void Start()
     {
-        SetBallPlayerPrefs();
+        SetPlayerPrefs();
     }
 
     // Open Shop Window OnClick
-    public void ShopUI()
+    public void OpenShopUI()
     {
         GameManager.Instance.shopUI.SetActive(true);
     }
 
     // Return To Game Menu OnClick
-    public void ShopBackButton()
+    public void CloseShopUI()
     {
         GameManager.Instance.shopUI.SetActive(false);
     }
 
     // Defining ball skins on shop for keeping on HDD. 
-    public void SetBallPlayerPrefs()
+    public void SetPlayerPrefs()
     {
-        
-
         if (!PlayerPrefs.HasKey("isRedBall"))
         {
             PlayerPrefs.SetInt("isRedBall", isRedBall ? 1 : 0);
@@ -51,7 +51,7 @@ public class ShopManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("isRedBall") == 1 ? true : false)
         {
-            redBall.SetActive(true);
+            redSkinBlackWing.SetActive(true);
         }
 
         if (!PlayerPrefs.HasKey("isBlueBall"))
@@ -100,7 +100,7 @@ public class ShopManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("isRedBall") == 1 ? true : false)
         {
-            redBall.SetActive(true);
+            redSkinBlackWing.SetActive(true);
             ballMaterial.color = new Color(1, 0, 0, 1);
             //AudioSource.PlayClipAtPoint(GameManager.Instance.multipleScoreSound,GameManager.Cam.transform.position);
         }

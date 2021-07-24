@@ -7,15 +7,11 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player")] 
     public float speed;
-    public GameObject lifeObstacle;
-    public GameObject deathObstacle;
     public SpiritController spiritController;
     public AudioClip deathSound;
     public AudioClip powerSound;
     public AudioClip startSound;
 
-    public bool isLifeAwake;
-    
     [Header("Spirit")] 
     public Transform playerModelRoot;
     public float posX;
@@ -177,7 +173,6 @@ public class PlayerController : MonoBehaviour
                 if (nearestObject.gameObject.transform.position.z - transform.position.z < 30f)
                 {
                     nearestObject.gameObject.SetActive(false);
-                    isLifeAwake = true;
                 }
             }
         }

@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject mainGameUI;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject finishGameUI;
-    [SerializeField] private GameObject shopUI;
+    public GameObject shopUI;
     public Animator animator;
     public Transform hand;
 
@@ -139,16 +139,7 @@ public class GameManager : MonoBehaviour
             return;
         }
     }
-
-    public void OpenShopUI()
-    {
-        shopUI.SetActive(true);
-    }
-
-    public void CloseShopUI()
-    {
-        shopUI.SetActive(false);
-    }
+    
     IEnumerator GameOverUIDelay()
     {
         yield return new WaitForSeconds(3f);
