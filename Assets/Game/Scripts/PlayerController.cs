@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
             _mousePosx = GameManager.Cam.ScreenToViewportPoint(Input.mousePosition).x;
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && _mousePosx != 0)
         {
             float newMousePosX = GameManager.Cam.ScreenToViewportPoint(Input.mousePosition).x;
             float distanceX = newMousePosX - _mousePosx;

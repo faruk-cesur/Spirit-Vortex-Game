@@ -11,6 +11,7 @@ public class CameraFollow : MonoBehaviour
     public Transform camPos;
     public Transform followerCam;
     public Transform finishCam;
+    public Transform gameOverCam;
 
     // _camera will keep the reference for Camera.main
     private void Awake()

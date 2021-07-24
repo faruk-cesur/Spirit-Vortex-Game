@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public Animator animator;
     public GameObject spiritPowerObstacle;
 
+    public Transform hand;
 
     // Using Game State For Functionality
     public enum GameState
@@ -66,9 +67,63 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    IEnumerator HandAnimation()
     {
-        Instantiate(spiritPowerObstacle, new Vector3(0, -1.5f, 191.90f),Quaternion.identity);
+        //-270 90 450
+        while (CurrentGameState==GameState.Prepare)
+        {
+            float timer = 0f;
+            Vector3 startPos = hand.localPosition;
+            while (true)
+            {
+                timer += Time.deltaTime*3f;
+                hand.localPosition = Vector3.Lerp(startPos,new Vector3(450,hand.localPosition.y,hand.localPosition.z),timer);
+                if (timer>=1f)
+                {
+                    break;
+                }
+                yield return new WaitForEndOfFrame();
+            }
+            timer = 0;
+            startPos = hand.localPosition;
+            while (true)
+            {
+                timer += Time.deltaTime*3f;
+                hand.localPosition = Vector3.Lerp(startPos,new Vector3(90,hand.localPosition.y,hand.localPosition.z),timer);
+                if (timer>=1f)
+                {
+                    break;
+                }
+                yield return new WaitForEndOfFrame();
+            }
+
+            yield return new WaitForSeconds(1f);
+            timer = 0;
+            startPos = hand.localPosition;
+            while (true)
+            {
+                timer += Time.deltaTime*3f;
+                hand.localPosition = Vector3.Lerp(startPos,new Vector3(-270,hand.localPosition.y,hand.localPosition.z),timer);
+                if (timer>=1f)
+                {
+                    break;
+                }
+                yield return new WaitForEndOfFrame();
+            }
+            timer = 0;
+            startPos = hand.localPosition;
+            while (true)
+            {
+                timer += Time.deltaTime*3f;
+                hand.localPosition = Vector3.Lerp(startPos,new Vector3(90,hand.localPosition.y,hand.localPosition.z),timer);
+                if (timer>=1f)
+                {
+                    break;
+                }
+                yield return new WaitForEndOfFrame();
+            }
+            yield return new WaitForSeconds(1f);
+        }
     }
 
     // Doing things in update when game state changes
@@ -108,6 +163,11 @@ public class GameManager : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException();
         }
+    }
+
+    private void Start()
+    {
+        StartCoroutine(HandAnimation());
     }
 
     // Reloads the same scene. Using with button
