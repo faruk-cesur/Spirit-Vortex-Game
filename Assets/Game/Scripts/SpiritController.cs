@@ -60,7 +60,7 @@ public class SpiritController : MonoBehaviour
             
                 if (!PlayerPrefs.HasKey("DiamondScore"))
                 {
-                    PlayerPrefs.SetInt("DiamondScore", diamondScore);
+                   PlayerPrefs.SetInt("DiamondScore", diamondScore);
                 }
 
                 if (true)

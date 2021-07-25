@@ -17,7 +17,6 @@ public class FinishLine : MonoBehaviour
             player.PlayerSpeedDown();
             finishSound.Play();
             backgroundMusic.Stop();
-            //GameManager.gameManager.winGoldText.text = GameManager.gameManager.goldText.text; // Toplam topladığımız ruh parçacığı
             GameManager.Instance.CurrentGameState = GameManager.GameState.FinishGame;
         }
     }
