@@ -5,15 +5,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Player")] 
-    public float speed;
+    [Header("Player")] public float speed;
     public SpiritController spiritController;
     public AudioClip deathSound;
     public AudioClip powerSound;
     public AudioClip startSound;
 
-    [Header("Spirit")] 
-    public Transform playerModelRoot;
+    [Header("Spirit")] public Transform playerModelRoot;
     public float posX;
     public float startPosX;
     public float swipeSec;
@@ -127,13 +125,13 @@ public class PlayerController : MonoBehaviour
             {
                 GameManager.Instance.animator.SetBool("CastSpell", true);
                 GameManager.Instance.animator.SetBool("MainGame", false);
-                AudioSource.PlayClipAtPoint(powerSound,GameManager.Cam.transform.position);
+                AudioSource.PlayClipAtPoint(powerSound, GameManager.Cam.transform.position);
                 speed = 0;
-                StartCoroutine(ObstacleAfterSpell());   
+                StartCoroutine(ObstacleAfterSpell());
                 StartCoroutine(SpeedUpAfterSpell());
             }
         }
-        
+
         FinishColliderTrigger finishColliderTrigger = other.GetComponentInParent<FinishColliderTrigger>();
         if (finishColliderTrigger)
         {
@@ -148,6 +146,7 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.animator.SetBool("CastSpell", false);
         GameManager.Instance.animator.SetBool("MainGame", true);
     }
+
     IEnumerator ObstacleAfterSpell()
     {
         yield return new WaitForSeconds(2f);
@@ -170,7 +169,7 @@ public class PlayerController : MonoBehaviour
             {
                 distanceToNearestObject = distanceToObject;
                 nearestObject = currentObjects;
-                
+
                 if (nearestObject.gameObject.transform.position.z - transform.position.z < 8f)
                 {
                     nearestObject.gameObject.SetActive(false);
@@ -185,16 +184,16 @@ public class PlayerController : MonoBehaviour
         LifeObstacleFind nearestObject = null;
         LifeObstacleFind[] allObjects = Resources.FindObjectsOfTypeAll<LifeObstacleFind>();
 
-    
+
         foreach (LifeObstacleFind currentObjects in allObjects)
         {
             float distanceToObject = (currentObjects.transform.position - this.transform.position).sqrMagnitude;
-    
+
             if (distanceToObject < distanceToNearestObject)
             {
                 distanceToNearestObject = distanceToObject;
                 nearestObject = currentObjects;
-                
+
                 if (nearestObject.gameObject.transform.position.z - transform.position.z < 8f)
                 {
                     nearestObject.gameObject.SetActive(true);
@@ -206,21 +205,21 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-       Obstacle obstacle = other.gameObject.GetComponentInParent<Obstacle>();
-    
-       if (obstacle)
-       {
-          GameManager.Instance.CurrentGameState = GameManager.GameState.GameOver;
-          GetComponent<Collider>().enabled = false;
-          other.gameObject.GetComponent<Collider>().enabled = false;
-          AudioSource.PlayClipAtPoint(deathSound,GameManager.Cam.transform.position);
-          StartCoroutine(PositionAfterGameOver());
-       }
+        Obstacle obstacle = other.gameObject.GetComponentInParent<Obstacle>();
+
+        if (obstacle)
+        {
+            GameManager.Instance.CurrentGameState = GameManager.GameState.GameOver;
+            GetComponent<Collider>().enabled = false;
+            other.gameObject.GetComponent<Collider>().enabled = false;
+            AudioSource.PlayClipAtPoint(deathSound, GameManager.Cam.transform.position);
+            StartCoroutine(PositionAfterGameOver());
+        }
     }
 
     IEnumerator PositionAfterGameOver()
     {
         yield return new WaitForSeconds(3.2f);
-        transform.position = new Vector3(transform.position.x, transform.position.y-0.405f, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y - 0.405f, transform.position.z);
     }
 }

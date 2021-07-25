@@ -4,7 +4,6 @@ using Vector3 = UnityEngine.Vector3;
 
 public class CameraFollow : MonoBehaviour
 {
-    
     // Variables
     private Camera _camera;
     public PlayerController player;
@@ -19,7 +18,7 @@ public class CameraFollow : MonoBehaviour
         _camera = Camera.main;
     }
 
-    
+
     // Camera is following frames per second
     private void Update()
     {
@@ -36,15 +35,18 @@ public class CameraFollow : MonoBehaviour
             {
                 _camera.transform.SetParent(followerCam);
             }
-            _camera.transform.localRotation = Quaternion.Lerp(_camera.transform.localRotation, Quaternion.identity, Time.deltaTime*2);
+
+            _camera.transform.localRotation =
+                Quaternion.Lerp(_camera.transform.localRotation, Quaternion.identity, Time.deltaTime * 2);
         }
-        
+
         else if (!player.finishCam && GameManager.Instance.CurrentGameState == GameManager.GameState.GameOver)
         {
             if (_camera.transform.parent != gameOverCam)
             {
                 _camera.transform.SetParent(gameOverCam);
             }
+
             _camera.transform.localRotation = Quaternion.Euler(Vector3.zero);
             gameOverCam.transform.LookAt(player.transform);
         }
@@ -59,10 +61,9 @@ public class CameraFollow : MonoBehaviour
             _camera.transform.localRotation = Quaternion.Euler(Vector3.zero);
             finishCam.transform.LookAt(player.transform);
         }
-        
 
-        _camera.transform.localPosition = Vector3.Lerp(_camera.transform.localPosition, Vector3.zero, Time.deltaTime*2);
-        
-        
+
+        _camera.transform.localPosition =
+            Vector3.Lerp(_camera.transform.localPosition, Vector3.zero, Time.deltaTime * 2);
     }
 }

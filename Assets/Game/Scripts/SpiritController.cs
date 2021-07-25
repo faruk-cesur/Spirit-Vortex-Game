@@ -25,7 +25,6 @@ public class SpiritController : MonoBehaviour
     public TMP_Text shopDiamondText;
 
 
-
     private void OnTriggerEnter(Collider other)
     {
         CollectSpiritFragment collectSpiritFragment = other.gameObject.GetComponentInParent<CollectSpiritFragment>();
@@ -36,20 +35,21 @@ public class SpiritController : MonoBehaviour
             AudioSource.PlayClipAtPoint(spiritCollectSound, GameManager.Cam.transform.position);
             Destroy(other.gameObject);
         }
-        
+
         NoGhostObstacle noGhostObstacle = other.gameObject.GetComponentInParent<NoGhostObstacle>();
-    
+
         if (noGhostObstacle)
         {
-            if (spiritFragment>0)
+            if (spiritFragment > 0)
             {
                 spiritFragment--;
             }
-            AudioSource.PlayClipAtPoint(electricSound,GameManager.Cam.transform.position);
+
+            AudioSource.PlayClipAtPoint(electricSound, GameManager.Cam.transform.position);
         }
-        
+
         CollectDiamond collectDiamond = other.gameObject.GetComponentInParent<CollectDiamond>();
-    
+
         if (collectDiamond)
         {
             diamondScore++;
@@ -57,16 +57,16 @@ public class SpiritController : MonoBehaviour
             diamondImageUI.GetComponent<Image>().enabled = true;
             Destroy(other.gameObject);
             animator.SetTrigger("DiamondUI");
-            
-                if (!PlayerPrefs.HasKey("DiamondScore"))
-                {
-                   PlayerPrefs.SetInt("DiamondScore", diamondScore);
-                }
 
-                if (true)
-                {
-                    PlayerPrefs.SetInt("DiamondScore", 1 + PlayerPrefs.GetInt("DiamondScore"));
-                }
+            if (!PlayerPrefs.HasKey("DiamondScore"))
+            {
+                PlayerPrefs.SetInt("DiamondScore", diamondScore);
+            }
+
+            if (true)
+            {
+                PlayerPrefs.SetInt("DiamondScore", 1 + PlayerPrefs.GetInt("DiamondScore"));
+            }
         }
     }
 
@@ -75,9 +75,9 @@ public class SpiritController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         diamondScoreText.text = diamondScore.ToString();
         finishGameDiamondText.text = diamondScoreText.text;
-        AudioSource.PlayClipAtPoint(diamondCollectSound,GameManager.Cam.transform.position);
+        AudioSource.PlayClipAtPoint(diamondCollectSound, GameManager.Cam.transform.position);
     }
-    
+
     private void Update()
     {
         SpiritChange();
@@ -145,6 +145,7 @@ public class SpiritController : MonoBehaviour
             spiritPower.SetActive(true);
             isSpiritPower = true;
         }
+
         if (spiritFragment < 5)
         {
             isSpiritPower = false;

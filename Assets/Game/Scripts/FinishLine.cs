@@ -6,7 +6,7 @@ public class FinishLine : MonoBehaviour
 {
     public AudioSource finishSound;
     public AudioSource backgroundMusic;
-    
+
     // Using OnTriggerEnter to change game state when player arrives finish line
     private void OnTriggerEnter(Collider other)
     {
@@ -20,6 +20,4 @@ public class FinishLine : MonoBehaviour
             GameManager.Instance.CurrentGameState = GameManager.GameState.FinishGame;
         }
     }
-
-
 }

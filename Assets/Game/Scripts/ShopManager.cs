@@ -48,7 +48,6 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private AudioClip shopLowCurrencySound;
 
 
-
     public void Start()
     {
         SetPlayerPrefs();
@@ -157,17 +156,19 @@ public class ShopManager : MonoBehaviour
             blackWingSkin.SetActive(true);
             player.spiritModel.GetComponent<MeshRenderer>().material = blackWingMaterial;
         }
-        
+
         if (PlayerPrefs.GetInt("isHeadsetSkin") == 1 ? true : false)
         {
             buyButton1.SetActive(false);
             useButton1.SetActive(true);
         }
+
         if (PlayerPrefs.GetInt("isRotorSkin") == 1 ? true : false)
         {
             buyButton2.SetActive(false);
             useButton2.SetActive(true);
         }
+
         if (PlayerPrefs.GetInt("isBlackWingSkin") == 1 ? true : false)
         {
             buyButton3.SetActive(false);

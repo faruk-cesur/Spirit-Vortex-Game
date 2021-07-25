@@ -22,10 +22,8 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        //PlayerPrefs.DeleteAll();
-        // PlayerPrefs.SetInt("DiamondScore", 5000);
-         SetLevelPlayerPrefs();
-         CallLevel();
+        SetLevelPlayerPrefs();
+        CallLevel();
     }
 
     public void SetLevelPlayerPrefs()
@@ -99,6 +97,7 @@ public class LevelManager : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex);
     }
+
     public void Level2Button()
     {
         currentLevel = 2;
@@ -106,6 +105,7 @@ public class LevelManager : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex);
     }
+
     public void Level3Button()
     {
         currentLevel = 3;

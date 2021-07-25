@@ -16,12 +16,13 @@ public class GameManager : MonoBehaviour
     // Singleton
     public static GameManager Instance;
     public static Camera Cam;
+
     private void Awake()
     {
         Instance = this;
         Cam = Camera.main;
     }
-    
+
     // All Variables in GameManager
 
     public PlayerController player;
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviour
         FinishGame,
         GameOver
     }
-    
+
     // Using extra switch for game state to run one time codes.
     public GameState CurrentGameState
     {
@@ -54,7 +55,7 @@ public class GameManager : MonoBehaviour
                 case GameState.Prepare:
                     break;
                 case GameState.MainGame:
-                    AudioSource.PlayClipAtPoint(player.startSound,Cam.transform.position);
+                    AudioSource.PlayClipAtPoint(player.startSound, Cam.transform.position);
                     break;
                 case GameState.FinishGame:
                     break;
@@ -68,11 +69,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
 
     // Doing things in update when game state changes
     private void Update()
-    
+
     {
         switch (CurrentGameState)
         {
@@ -86,27 +86,28 @@ public class GameManager : MonoBehaviour
                 {
                     CurrentGameState = GameState.MainGame;
                 }
+
                 break;
             case GameState.MainGame:
                 mainGameUI.SetActive(true);
                 animator.applyRootMotion = false;
                 player.transform.rotation = Quaternion.identity;
-                animator.SetBool("MainGame",true);
+                animator.SetBool("MainGame", true);
                 prepareUI.SetActive(false);
                 player.PlayerMovement();
-                
+
                 break;
             case GameState.FinishGame:
                 player.PlayerMovement();
-                animator.SetBool("MainGame",false);
-                animator.SetBool("FinishGame",true);
-                player.playerModelRoot.Rotate(Vector3.left*5);
+                animator.SetBool("MainGame", false);
+                animator.SetBool("FinishGame", true);
+                player.playerModelRoot.Rotate(Vector3.left * 5);
                 StartCoroutine(FinishGameUIDelay());
                 break;
             case GameState.GameOver:
                 StartCoroutine(GameOverUIDelay());
-                animator.SetBool("MainGame",false);
-                animator.SetBool("GameOver",true);
+                animator.SetBool("MainGame", false);
+                animator.SetBool("GameOver", true);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -124,39 +125,45 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         gameOverUI.SetActive(true);
     }
+
     IEnumerator FinishGameUIDelay()
     {
         yield return new WaitForSeconds(2f);
         finishGameUI.SetActive(true);
     }
-    
+
     IEnumerator HandAnimation()
     {
         //-270 90 450
-        while (CurrentGameState==GameState.Prepare)
+        while (CurrentGameState == GameState.Prepare)
         {
             float timer = 0f;
             Vector3 startPos = hand.localPosition;
             while (true)
             {
-                timer += Time.deltaTime*3f;
-                hand.localPosition = Vector3.Lerp(startPos,new Vector3(450,hand.localPosition.y,hand.localPosition.z),timer);
-                if (timer>=1f)
+                timer += Time.deltaTime * 3f;
+                hand.localPosition = Vector3.Lerp(startPos,
+                    new Vector3(450, hand.localPosition.y, hand.localPosition.z), timer);
+                if (timer >= 1f)
                 {
                     break;
                 }
+
                 yield return new WaitForEndOfFrame();
             }
+
             timer = 0;
             startPos = hand.localPosition;
             while (true)
             {
-                timer += Time.deltaTime*3f;
-                hand.localPosition = Vector3.Lerp(startPos,new Vector3(90,hand.localPosition.y,hand.localPosition.z),timer);
-                if (timer>=1f)
+                timer += Time.deltaTime * 3f;
+                hand.localPosition = Vector3.Lerp(startPos, new Vector3(90, hand.localPosition.y, hand.localPosition.z),
+                    timer);
+                if (timer >= 1f)
                 {
                     break;
                 }
+
                 yield return new WaitForEndOfFrame();
             }
 
@@ -165,26 +172,32 @@ public class GameManager : MonoBehaviour
             startPos = hand.localPosition;
             while (true)
             {
-                timer += Time.deltaTime*3f;
-                hand.localPosition = Vector3.Lerp(startPos,new Vector3(-270,hand.localPosition.y,hand.localPosition.z),timer);
-                if (timer>=1f)
+                timer += Time.deltaTime * 3f;
+                hand.localPosition = Vector3.Lerp(startPos,
+                    new Vector3(-270, hand.localPosition.y, hand.localPosition.z), timer);
+                if (timer >= 1f)
                 {
                     break;
                 }
+
                 yield return new WaitForEndOfFrame();
             }
+
             timer = 0;
             startPos = hand.localPosition;
             while (true)
             {
-                timer += Time.deltaTime*3f;
-                hand.localPosition = Vector3.Lerp(startPos,new Vector3(90,hand.localPosition.y,hand.localPosition.z),timer);
-                if (timer>=1f)
+                timer += Time.deltaTime * 3f;
+                hand.localPosition = Vector3.Lerp(startPos, new Vector3(90, hand.localPosition.y, hand.localPosition.z),
+                    timer);
+                if (timer >= 1f)
                 {
                     break;
                 }
+
                 yield return new WaitForEndOfFrame();
             }
+
             yield return new WaitForSeconds(1f);
         }
     }
