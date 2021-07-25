@@ -77,15 +77,7 @@ public class SpiritController : MonoBehaviour
         finishGameDiamondText.text = diamondScoreText.text;
         AudioSource.PlayClipAtPoint(diamondCollectSound,GameManager.Cam.transform.position);
     }
-
-
-    private void Start()
-    {
-        //PlayerPrefs.DeleteAll();
-        //PlayerPrefs.SetInt("DiamondScore",5000);
-    }
-
-
+    
     private void Update()
     {
         SpiritChange();

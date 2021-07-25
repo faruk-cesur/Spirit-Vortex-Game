@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour
                 distanceToNearestObject = distanceToObject;
                 nearestObject = currentObjects;
                 
-                if (nearestObject.gameObject.transform.position.z - transform.position.z < 30f)
+                if (nearestObject.gameObject.transform.position.z - transform.position.z < 8f)
                 {
                     nearestObject.gameObject.SetActive(false);
                 }
@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
                 distanceToNearestObject = distanceToObject;
                 nearestObject = currentObjects;
                 
-                if (nearestObject.gameObject.transform.position.z - transform.position.z < 30f)
+                if (nearestObject.gameObject.transform.position.z - transform.position.z < 8f)
                 {
                     nearestObject.gameObject.SetActive(true);
                 }

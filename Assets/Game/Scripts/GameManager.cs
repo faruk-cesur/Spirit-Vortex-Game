@@ -118,28 +118,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(HandAnimation());
     }
 
-    // Reloads the same scene. Using with button
-    public void Retry()
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.buildIndex);
-    }
 
-    // Loads the next scene. Using with button
-    public void NextLevel()
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        
-        if (SceneManager.sceneCountInBuildSettings > currentScene.buildIndex+1)
-        {
-            SceneManager.LoadScene(currentScene.buildIndex+1);
-        }
-        else if (SceneManager.sceneCountInBuildSettings <= currentScene.buildIndex+1)
-        {
-            return;
-        }
-    }
-    
     IEnumerator GameOverUIDelay()
     {
         yield return new WaitForSeconds(3f);
