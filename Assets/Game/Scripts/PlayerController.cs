@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public float startPosX;
     public float swipeSec;
     public float swipeValue;
+    public GameObject spiritModel;
 
     private float _mousePosx;
     private bool _inputControl;

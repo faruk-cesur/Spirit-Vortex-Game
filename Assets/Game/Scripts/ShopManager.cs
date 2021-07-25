@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShopManager : MonoBehaviour
 {
-     // Using Singleton Design Pattern to reach this script everywhere.
+    // Using Singleton Design Pattern to reach this script everywhere.
     public static ShopManager Instance;
 
     private void Awake()
@@ -15,140 +15,303 @@ public class ShopManager : MonoBehaviour
     // Variables Defined.
     public PlayerController player;
 
-    public Material ballMaterial;
+    public GameObject blackWingSkin;
+    public Material blackWingMaterial;
 
-    public GameObject redSkinBlackWing;
-    public GameObject blueBall;
-    public GameObject pinkBall;
-    private bool isRedBall = false;
-    private bool isBlueBall = false;
-    private bool isPinkBall = false;
+    public GameObject rotorSkin;
+    public Material rotorMaterial;
+
+    public GameObject headsetSkin;
+    public Material headsetMaterial;
+
+    public Material defaultMaterial;
+
+    private bool _isBlackWingSkin = false;
+    private bool _isRotorSkin = false;
+    private bool _isHeadsetSkin = false;
+
+    private bool _useBlackWingSkin = false;
+    private bool _useRotorSkin = false;
+    private bool _useHeadsetSkin = false;
+    private bool _useDefaultSkin = false;
+
+    [SerializeField] private GameObject useButton1;
+    [SerializeField] private GameObject useButton2;
+    [SerializeField] private GameObject useButton3;
+    [SerializeField] private GameObject buyButton1;
+    [SerializeField] private GameObject buyButton2;
+    [SerializeField] private GameObject buyButton3;
+
+    [SerializeField] private AudioClip shopBuySound;
+    [SerializeField] private AudioClip shopUseSound;
+    [SerializeField] private AudioClip shopBackSound;
+    [SerializeField] private AudioClip shopLowCurrencySound;
+
+
 
     public void Start()
     {
         SetPlayerPrefs();
+        GetPlayerPrefs();
     }
 
     // Open Shop Window OnClick
     public void OpenShopUI()
     {
         GameManager.Instance.shopUI.SetActive(true);
+        AudioSource.PlayClipAtPoint(shopBuySound, GameManager.Cam.transform.position);
     }
 
     // Return To Game Menu OnClick
     public void CloseShopUI()
     {
         GameManager.Instance.shopUI.SetActive(false);
+        AudioSource.PlayClipAtPoint(shopBackSound, GameManager.Cam.transform.position);
     }
 
     // Defining ball skins on shop for keeping on HDD. 
     public void SetPlayerPrefs()
     {
-        if (!PlayerPrefs.HasKey("isRedBall"))
+        if (!PlayerPrefs.HasKey("isBlackWingSkin"))
         {
-            PlayerPrefs.SetInt("isRedBall", isRedBall ? 1 : 0);
+            PlayerPrefs.SetInt("isBlackWingSkin", _isBlackWingSkin ? 1 : 0);
         }
 
-        if (PlayerPrefs.GetInt("isRedBall") == 1 ? true : false)
+        if (PlayerPrefs.GetInt("isBlackWingSkin") == 1 ? true : false)
         {
-            redSkinBlackWing.SetActive(true);
-        }
-
-        if (!PlayerPrefs.HasKey("isBlueBall"))
-        {
-            PlayerPrefs.SetInt("isBlueBall", isBlueBall ? 1 : 0);
-        }
-
-        if (PlayerPrefs.GetInt("isBlueBall") == 1 ? true : false)
-        {
-            blueBall.SetActive(true);
-        }
-        
-
-        if (!PlayerPrefs.HasKey("isPinkBall"))
-        {
-            PlayerPrefs.SetInt("isPinkBall", isPinkBall ? 1 : 0);
-        }
-
-        if (PlayerPrefs.GetInt("isPinkBall") == 1 ? true : false)
-        {
-            pinkBall.SetActive(true);
-        }
-        
-    }
-
-    // Change the ball skin to Default (black)
-    public void BuyDefaultBall()
-    {
-        ballMaterial.color = Color.black;
-        //AudioSource.PlayClipAtPoint(GameManager.Instance.multipleScoreSound,GameManager.Instance.camera.transform.position);
-    }
-    
-    // Change the ball skin color to Red 
-    // Checks If The Player has already bought the skin before. If not, purchase it and keep it on HDD.
-    public void BuyRedBall()
-    {
-        if (PlayerPrefs.GetInt("DiamondScore") >= 100)
-        {
-            if (PlayerPrefs.GetInt("isRedBall") == 0 ? true : false)
+            if (_useBlackWingSkin)
             {
-                isRedBall = true;
-                PlayerPrefs.SetInt("isRedBall", isRedBall ? 1 : 0);
-                PlayerPrefs.SetInt("DiamondScore", PlayerPrefs.GetInt("DiamondScore") - 100);
+                blackWingSkin.SetActive(true);
+                player.spiritModel.GetComponent<MeshRenderer>().material = blackWingMaterial;
             }
         }
 
-        if (PlayerPrefs.GetInt("isRedBall") == 1 ? true : false)
+        if (!PlayerPrefs.HasKey("isRotorSkin"))
         {
-            redSkinBlackWing.SetActive(true);
-            ballMaterial.color = new Color(1, 0, 0, 1);
-            //AudioSource.PlayClipAtPoint(GameManager.Instance.multipleScoreSound,GameManager.Cam.transform.position);
+            PlayerPrefs.SetInt("isRotorSkin", _isRotorSkin ? 1 : 0);
+        }
+
+        if (PlayerPrefs.GetInt("isRotorSkin") == 1 ? true : false)
+        {
+            if (_useRotorSkin)
+            {
+                rotorSkin.SetActive(true);
+                player.spiritModel.GetComponent<MeshRenderer>().material = rotorMaterial;
+            }
+        }
+
+
+        if (!PlayerPrefs.HasKey("isHeadsetSkin"))
+        {
+            PlayerPrefs.SetInt("isHeadsetSkin", _isHeadsetSkin ? 1 : 0);
+        }
+
+        if (PlayerPrefs.GetInt("isHeadsetSkin") == 1 ? true : false)
+        {
+            Debug.Log("1");
+            if (_useHeadsetSkin)
+            {
+                Debug.Log("2");
+                headsetSkin.SetActive(true);
+                player.spiritModel.GetComponent<MeshRenderer>().material = headsetMaterial;
+            }
+        }
+    }
+
+    public void GetPlayerPrefs()
+    {
+        if (PlayerPrefs.GetInt("UseDefaultSkin") == 1 ? true : false)
+        {
+            headsetSkin.SetActive(false);
+            rotorSkin.SetActive(false);
+            blackWingSkin.SetActive(false);
+            player.spiritModel.GetComponent<MeshRenderer>().material = defaultMaterial;
+        }
+
+        if (PlayerPrefs.GetInt("UseHeadsetSkin") == 1 ? true : false)
+        {
+            buyButton1.SetActive(false);
+            useButton1.SetActive(true);
+            headsetSkin.SetActive(true);
+            rotorSkin.SetActive(false);
+            blackWingSkin.SetActive(false);
+            player.spiritModel.GetComponent<MeshRenderer>().material = headsetMaterial;
+        }
+
+        if (PlayerPrefs.GetInt("UseRotorSkin") == 1 ? true : false)
+        {
+            buyButton2.SetActive(false);
+            useButton2.SetActive(true);
+            headsetSkin.SetActive(false);
+            rotorSkin.SetActive(true);
+            blackWingSkin.SetActive(false);
+            player.spiritModel.GetComponent<MeshRenderer>().material = rotorMaterial;
+        }
+
+        if (PlayerPrefs.GetInt("UseBlackWingSkin") == 1 ? true : false)
+        {
+            buyButton3.SetActive(false);
+            useButton3.SetActive(true);
+            headsetSkin.SetActive(false);
+            rotorSkin.SetActive(false);
+            blackWingSkin.SetActive(true);
+            player.spiritModel.GetComponent<MeshRenderer>().material = blackWingMaterial;
+        }
+        
+        if (PlayerPrefs.GetInt("isHeadsetSkin") == 1 ? true : false)
+        {
+            buyButton1.SetActive(false);
+            useButton1.SetActive(true);
+        }
+        if (PlayerPrefs.GetInt("isRotorSkin") == 1 ? true : false)
+        {
+            buyButton2.SetActive(false);
+            useButton2.SetActive(true);
+        }
+        if (PlayerPrefs.GetInt("isBlackWingSkin") == 1 ? true : false)
+        {
+            buyButton3.SetActive(false);
+            useButton3.SetActive(true);
+        }
+    }
+
+    // Change the spirit skin to Default
+    public void BuyDefaultMaterial()
+    {
+        _useHeadsetSkin = false;
+        _useRotorSkin = false;
+        _useBlackWingSkin = false;
+        _useDefaultSkin = true;
+        player.spiritModel.GetComponent<MeshRenderer>().material = defaultMaterial;
+        blackWingSkin.SetActive(false);
+        rotorSkin.SetActive(false);
+        headsetSkin.SetActive(false);
+        AudioSource.PlayClipAtPoint(shopUseSound, GameManager.Cam.transform.position);
+        PlayerPrefs.SetInt("UseHeadsetSkin", _useHeadsetSkin ? 1 : 0);
+        PlayerPrefs.SetInt("UseRotorSkin", _useRotorSkin ? 1 : 0);
+        PlayerPrefs.SetInt("UseBlackWingSkin", _useBlackWingSkin ? 1 : 0);
+        PlayerPrefs.SetInt("UseDefaultSkin", _useDefaultSkin ? 1 : 0);
+    }
+
+    // Change the ball skin color to Red 
+    // Checks If The Player has already bought the skin before. If not, purchase it and keep it on HDD.
+    public void BuyBlackWingSkin()
+    {
+        if (PlayerPrefs.GetInt("DiamondScore") >= 300)
+        {
+            if (PlayerPrefs.GetInt("isBlackWingSkin") == 0 ? true : false)
+            {
+                _isBlackWingSkin = true;
+                PlayerPrefs.SetInt("isBlackWingSkin", _isBlackWingSkin ? 1 : 0);
+                PlayerPrefs.SetInt("DiamondScore", PlayerPrefs.GetInt("DiamondScore") - 300);
+                AudioSource.PlayClipAtPoint(shopBuySound, GameManager.Cam.transform.position);
+            }
+        }
+        else
+        {
+            AudioSource.PlayClipAtPoint(shopLowCurrencySound, GameManager.Cam.transform.position);
+        }
+
+        if (PlayerPrefs.GetInt("isBlackWingSkin") == 1 ? true : false)
+        {
+            buyButton3.SetActive(false);
+            useButton3.SetActive(true);
+            _useHeadsetSkin = false;
+            _useRotorSkin = false;
+            _useBlackWingSkin = true;
+            _useDefaultSkin = false;
+            blackWingSkin.SetActive(true);
+            headsetSkin.SetActive(false);
+            rotorSkin.SetActive(false);
+            player.spiritModel.GetComponent<MeshRenderer>().material = blackWingMaterial;
+            AudioSource.PlayClipAtPoint(shopUseSound, GameManager.Cam.transform.position);
+
+            PlayerPrefs.SetInt("UseHeadsetSkin", _useHeadsetSkin ? 1 : 0);
+            PlayerPrefs.SetInt("UseRotorSkin", _useRotorSkin ? 1 : 0);
+            PlayerPrefs.SetInt("UseBlackWingSkin", _useBlackWingSkin ? 1 : 0);
+            PlayerPrefs.SetInt("UseDefaultSkin", _useDefaultSkin ? 1 : 0);
         }
     }
 
     // Change the ball skin color to Blue 
     // Checks If The Player has already bought the skin before. If not, purchase it and keep it on HDD.
-    public void BuyBlueBall()
+    public void BuyRotorSkin()
     {
-        if (PlayerPrefs.GetInt("DiamondScore") >= 100)
+        if (PlayerPrefs.GetInt("DiamondScore") >= 200)
         {
-            if (PlayerPrefs.GetInt("isBlueBall") == 0 ? true : false)
+            if (PlayerPrefs.GetInt("isRotorSkin") == 0 ? true : false)
             {
-                isBlueBall = true;
-                PlayerPrefs.SetInt("isBlueBall", isBlueBall ? 1 : 0);
-                PlayerPrefs.SetInt("DiamondScore", PlayerPrefs.GetInt("DiamondScore") - 100);
+                _isRotorSkin = true;
+                PlayerPrefs.SetInt("isRotorSkin", _isRotorSkin ? 1 : 0);
+                PlayerPrefs.SetInt("DiamondScore", PlayerPrefs.GetInt("DiamondScore") - 200);
+                AudioSource.PlayClipAtPoint(shopBuySound, GameManager.Cam.transform.position);
             }
         }
-
-        if (PlayerPrefs.GetInt("isBlueBall") == 1 ? true : false)
+        else
         {
-            blueBall.SetActive(true);
-            ballMaterial.color = new Color(0, 1, 1, 1);
-            //AudioSource.PlayClipAtPoint(GameManager.Instance.multipleScoreSound, GameManager.Instance.camera.transform.position);
+            AudioSource.PlayClipAtPoint(shopLowCurrencySound, GameManager.Cam.transform.position);
+        }
+
+        if (PlayerPrefs.GetInt("isRotorSkin") == 1 ? true : false)
+        {
+            buyButton2.SetActive(false);
+            useButton2.SetActive(true);
+            _useHeadsetSkin = false;
+            _useBlackWingSkin = false;
+            _useRotorSkin = true;
+            _useDefaultSkin = false;
+            rotorSkin.SetActive(true);
+            blackWingSkin.SetActive(false);
+            headsetSkin.SetActive(false);
+            player.spiritModel.GetComponent<MeshRenderer>().material = rotorMaterial;
+            AudioSource.PlayClipAtPoint(shopUseSound, GameManager.Cam.transform.position);
+
+
+            PlayerPrefs.SetInt("UseHeadsetSkin", _useHeadsetSkin ? 1 : 0);
+            PlayerPrefs.SetInt("UseRotorSkin", _useRotorSkin ? 1 : 0);
+            PlayerPrefs.SetInt("UseBlackWingSkin", _useBlackWingSkin ? 1 : 0);
+            PlayerPrefs.SetInt("UseDefaultSkin", _useDefaultSkin ? 1 : 0);
         }
     }
 
-    
 
     // Change the ball skin color to Pink 
     // Checks If The Player has already bought the skin before. If not, purchase it and keep it on HDD.
-    public void BuyPinkBall()
+    public void BuyHeadsetSkin()
     {
         if (PlayerPrefs.GetInt("DiamondScore") >= 100)
         {
-            if (PlayerPrefs.GetInt("isPinkBall") == 0 ? true : false)
+            if (PlayerPrefs.GetInt("isHeadsetSkin") == 0 ? true : false)
             {
-                isPinkBall = true;
-                PlayerPrefs.SetInt("isPinkBall", isPinkBall ? 1 : 0);
+                _isHeadsetSkin = true;
+                PlayerPrefs.SetInt("isHeadsetSkin", _isHeadsetSkin ? 1 : 0);
                 PlayerPrefs.SetInt("DiamondScore", PlayerPrefs.GetInt("DiamondScore") - 100);
+                AudioSource.PlayClipAtPoint(shopBuySound, GameManager.Cam.transform.position);
             }
         }
-
-        if (PlayerPrefs.GetInt("isPinkBall") == 1 ? true : false)
+        else
         {
-            pinkBall.SetActive(true);
-            ballMaterial.color = new Color(1, 0, 1, 1);
-           // AudioSource.PlayClipAtPoint(GameManager.Instance.multipleScoreSound, GameManager.Instance.camera.transform.position);
+            AudioSource.PlayClipAtPoint(shopLowCurrencySound, GameManager.Cam.transform.position);
+        }
+
+        if (PlayerPrefs.GetInt("isHeadsetSkin") == 1 ? true : false)
+        {
+            buyButton1.SetActive(false);
+            useButton1.SetActive(true);
+            _useHeadsetSkin = true;
+            _useRotorSkin = false;
+            _useBlackWingSkin = false;
+            _useDefaultSkin = false;
+            headsetSkin.SetActive(true);
+            rotorSkin.SetActive(false);
+            blackWingSkin.SetActive(false);
+            player.spiritModel.GetComponent<MeshRenderer>().material = headsetMaterial;
+            AudioSource.PlayClipAtPoint(shopUseSound, GameManager.Cam.transform.position);
+
+            PlayerPrefs.SetInt("UseHeadsetSkin", _useHeadsetSkin ? 1 : 0);
+            PlayerPrefs.SetInt("UseRotorSkin", _useRotorSkin ? 1 : 0);
+            PlayerPrefs.SetInt("UseBlackWingSkin", _useBlackWingSkin ? 1 : 0);
+            PlayerPrefs.SetInt("UseDefaultSkin", _useDefaultSkin ? 1 : 0);
         }
     }
 }

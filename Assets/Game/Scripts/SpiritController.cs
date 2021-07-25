@@ -67,8 +67,6 @@ public class SpiritController : MonoBehaviour
                 {
                     PlayerPrefs.SetInt("DiamondScore", 1 + PlayerPrefs.GetInt("DiamondScore"));
                 }
-
-                shopDiamondText.text = PlayerPrefs.GetInt("DiamondScore").ToString();
         }
     }
 
@@ -81,15 +79,17 @@ public class SpiritController : MonoBehaviour
     }
 
 
-    // private void Start()
-    // {
-    //     PlayerPrefs.DeleteAll();
-    // }
+    private void Start()
+    {
+        //PlayerPrefs.DeleteAll();
+        //PlayerPrefs.SetInt("DiamondScore",5000);
+    }
 
 
     private void Update()
     {
         SpiritChange();
+        shopDiamondText.text = PlayerPrefs.GetInt("DiamondScore").ToString();
     }
 
     private void SpiritChange()
